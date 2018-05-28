@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="container msg-container">
+                <p>{{ message.message }}</p>
+                <span class="time-right">{{ message.sent_on }}</span>
+                {% if message.sender.id == request.user.id %}
+                    <span class="name">{{ message.sender.username }}</span>
+                {% else %}
+                    <span class="name">Me</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'chat' reciever.id %}" id="msgform" method="post">{% csrf_token %}
+        <input type="hidden" name="reciever_id" value="{{ reciever.id }}" id="reciever">
+        <input type="hidden" name="sender_id" value="{{ sender.id }}" id="sender">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-1">
+                        <label for="message">Message:</label>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea class="form-control" rows="3" id="message" name="message" required>
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success send_msg">Send message</button>
+    </form>
+
+{% endblock %}
+
+{% block extra_js %}
+{#    <script type="text/javascript" src="{% static 'js/chatting.js' %}"></script>#}
+{% endblock %}
