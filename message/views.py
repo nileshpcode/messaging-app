@@ -3,10 +3,14 @@ from __future__ import unicode_literals
 
 from django.db.models import Q
 from django.views.generic import ListView, CreateView
+from django.views import View
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import User
-from django.shortcuts import HttpResponseRedirect
+from django.shortcuts import HttpResponseRedirect, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
+from push_notifications.models import GCMDevice
 from message.models import Message
 
 
@@ -53,3 +57,16 @@ class MessageView(CreateView):
     #     print form.cleaned_data
     #     message = form.cleaned_data['message']
     #     # Message.objects.create()
+
+
+class TokenCreateView(View):
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super(TokenCreateView, self).dispatch(request)
+
+    def post(self, request, *args, **kwargs):
+        device_id = request.POST.get('device_id')
+        GCMDevice.objects.get_or_create()
+        GCMDevice.objects.create(registration_id=device_id, cloud_message_type="FCM")
+        return HttpResponse('success')
