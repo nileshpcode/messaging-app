@@ -67,6 +67,5 @@ class TokenCreateView(View):
 
     def post(self, request, *args, **kwargs):
         device_id = request.POST.get('device_id')
-        GCMDevice.objects.get_or_create()
-        GCMDevice.objects.create(registration_id=device_id, cloud_message_type="FCM")
+        GCMDevice.objects.get_or_create(registration_id=device_id, cloud_message_type="FCM")
         return HttpResponse('success')
