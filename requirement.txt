@@ -8,7 +8,7 @@ confusable-homoglyphs==3.1.1
 constantly==15.1.0
 daphne==1.4.2
 Django==1.11.13
-django-registration==2.4.1
+django-registration==3.1.2
 django-registration-redux==2.4
 hyperlink==18.0.0
 idna==2.6
@@ -42,7 +42,7 @@ Django==1.11.13
 django-celery-beat==1.1.1
 django-celery-results==1.0.1
 django-push-notifications==1.6.0
-django-registration==2.4.1
+django-registration==3.1.2
 django-registration-redux==2.4
 enum34==1.1.6
 h2==2.6.2
